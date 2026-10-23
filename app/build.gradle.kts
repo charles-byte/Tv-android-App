@@ -2,6 +2,8 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("org.jetbrains.kotlin.plugin.compose")
+    // Renders the home screen to PNG on a computer, so the design can be checked without a TV.
+    id("app.cash.paparazzi")
 }
 
 android {
@@ -65,4 +67,6 @@ dependencies {
     implementation("androidx.compose.foundation:foundation")
     implementation("androidx.compose.material:material-icons-extended")
     implementation("androidx.tv:tv-material:1.0.0")
+
+    testImplementation("junit:junit:4.13.2")
 }
