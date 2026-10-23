@@ -1,36 +1,26 @@
 package com.charles.tvhome
 
-import app.cash.paparazzi.DeviceConfig
-import app.cash.paparazzi.Paparazzi
-import com.android.resources.Density
-import com.android.resources.ScreenOrientation
 import com.charles.tvhome.ui.home.HomeScreen
 import com.charles.tvhome.ui.theme.TvHomeTheme
-import org.junit.Rule
+import com.github.takahirom.roborazzi.captureRoboImage
 import org.junit.Test
+import org.junit.runner.RunWith
+import org.robolectric.RobolectricTestRunner
+import org.robolectric.annotation.Config
+import org.robolectric.annotation.GraphicsMode
 
 /**
- * Renders the home screen as a 1080p TV would draw it.
- * Run `./gradlew :app:recordPaparazziDebug`; images land in app/src/test/snapshots/images.
+ * Renders the home screen as a 1080p TV draws it (960x540 dp at xhdpi).
+ * Run `./gradlew :app:testDebugUnitTest`; the image lands in app/build/screenshots.
  */
+@RunWith(RobolectricTestRunner::class)
+@GraphicsMode(GraphicsMode.Mode.NATIVE)
+@Config(sdk = [35], qualifiers = "w960dp-h540dp-land-xhdpi")
 class HomeScreenshotTest {
-
-    @get:Rule
-    val paparazzi = Paparazzi(
-        deviceConfig = DeviceConfig.NEXUS_5.copy(
-            screenWidth = 1920,
-            screenHeight = 1080,
-            xdpi = 320,
-            ydpi = 320,
-            density = Density.XHIGH,
-            orientation = ScreenOrientation.LANDSCAPE,
-        ),
-        theme = "android:Theme.DeviceDefault.NoActionBar",
-    )
 
     @Test
     fun home() {
-        paparazzi.snapshot {
+        captureRoboImage("build/screenshots/home.png") {
             TvHomeTheme {
                 HomeScreen(homePresses = 0, resumes = 0)
             }

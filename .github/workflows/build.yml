@@ -66,22 +66,19 @@ jobs:
       - name: Render screenshots
         run: |
           chmod +x gradlew
-          ./gradlew :app:recordPaparazziDebug --stacktrace
+          ./gradlew :app:testDebugUnitTest --stacktrace
 
       - uses: actions/upload-artifact@v4
         with:
           name: screenshots
-          path: app/src/test/snapshots/images/
+          path: app/build/screenshots/
 
       - name: Publish to screenshots branch
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
           mkdir out
-          for f in app/src/test/snapshots/images/*.png; do
-            name="${f##*_}"
-            cp "$f" "out/$name"
-          done
+          cp app/build/screenshots/*.png out/
           ls out
           cd out
           git init -q

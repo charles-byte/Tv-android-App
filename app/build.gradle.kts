@@ -2,8 +2,6 @@ plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     id("org.jetbrains.kotlin.plugin.compose")
-    // Renders the home screen to PNG on a computer, so the design can be checked without a TV.
-    id("app.cash.paparazzi")
 }
 
 android {
@@ -54,6 +52,15 @@ android {
     buildFeatures {
         compose = true
     }
+
+    // Screenshot test (HomeScreenshotTest) renders the home screen to PNG on a computer,
+    // so the design can be checked without a TV.
+    testOptions {
+        unitTests {
+            isIncludeAndroidResources = true
+            all { it.systemProperty("roborazzi.test.record", "true") }
+        }
+    }
 }
 
 dependencies {
@@ -69,4 +76,9 @@ dependencies {
     implementation("androidx.tv:tv-material:1.0.0")
 
     testImplementation("junit:junit:4.13.2")
+    testImplementation("org.robolectric:robolectric:4.16.1")
+    testImplementation("io.github.takahirom.roborazzi:roborazzi:1.77.0")
+    testImplementation("io.github.takahirom.roborazzi:roborazzi-compose:1.77.0")
+    testImplementation("androidx.compose.ui:ui-test-junit4")
+    debugImplementation("androidx.compose.ui:ui-test-manifest")
 }
