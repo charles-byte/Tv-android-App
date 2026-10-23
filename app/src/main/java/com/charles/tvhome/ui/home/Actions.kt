@@ -10,11 +10,15 @@ fun openSystemSettings(context: Context) {
     try {
         context.startActivity(Intent(Settings.ACTION_SETTINGS).addFlags(Intent.FLAG_ACTIVITY_NEW_TASK))
     } catch (e: ActivityNotFoundException) {
-        Toast.makeText(context, "Settings are not available on this device", Toast.LENGTH_SHORT).show()
+        showMessage(context, "Settings are not available on this device")
     }
+}
+
+fun showMessage(context: Context, text: String) {
+    Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
 }
 
 /** Used by tiles whose behaviour lands in a later build step. */
 fun showComingSoon(context: Context, what: String) {
-    Toast.makeText(context, "$what: coming in a later build", Toast.LENGTH_SHORT).show()
+    showMessage(context, "$what: coming in a later build")
 }

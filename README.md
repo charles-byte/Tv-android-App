@@ -9,34 +9,36 @@ Package name: `com.charles.tvhome`
 | Step | What | State |
 |---|---|---|
 | 1 | Project skeleton, manifest, launcher registration, dark screen | Done |
-| 2 | Static layout with sample data and working focus | Done, waiting for TV test |
-| 3 to 10 | App launching, live clock/weather, sports, Continue watching, HDMI, wallpaper, screensaver, Home Button Fix, config | Not started |
+| 2 | Layout with sample data and working focus (redesigned: glass shelf, soft backdrop, spring focus) | Done, waiting for TV test |
+| 3 | App launching and installed-app detection, banners taken from the installed apps | Done, waiting for TV test |
+| 4 to 10 | Live weather, sports, Continue watching, HDMI, wallpaper, screensaver, Home Button Fix, config | Not started |
 
 In this build:
 
 - The clock and date are live (24-hour, British English, device timezone).
 - Settings opens Android system settings.
-- Weather, Continue watching, sports and inputs show **sample data** (marked "SAMPLE" on screen). Selecting a tile shows a short "coming in a later build" message.
+- The app shelf finds YouTube, Netflix, DStv, TOD, Showmax and Spotify on the TV, shows each app's own banner and opens it. Apps that aren't installed are dimmed.
+- Weather, Continue watching, sports and inputs show **sample data** (marked "sample" on screen). Selecting those shows a short "coming in a later build" message.
 - The sports rows show all three time states at once so you can check them: F1 shows a countdown, MotoGP Sprint shows LIVE, Man Utd shows a day and time.
 
 ## Getting the APK
 
 Every push to `main` is built by GitHub Actions (`.github/workflows/build.yml`).
 
-- **Easiest:** open the repository's **Releases** page and download `tvhome-debug.apk` from the release named **Latest build**. The direct link is
-  `https://github.com/charles-byte/Tv-android-App/releases/download/latest/tvhome-debug.apk`
+- **Easiest:** open the repository's **Releases** page and download `tvhome.apk` from the release named **Latest build**. The direct link is
+  `https://github.com/charles-byte/Tv-android-App/releases/download/latest/tvhome.apk`
   (if the repository is private you must be signed in to GitHub).
-- Or open **Actions**, pick the latest **Build APK** run and download the `tvhome-debug-apk` artifact (a zip containing `app-debug.apk`).
+- Or open **Actions**, pick the latest **Build APK** run and download the `tvhome-apk` artifact (a zip with `app-release.apk`, the one to install, and `app-debug.apk` for troubleshooting).
 
-All builds are signed with the same debug key (`app/debug.keystore`), so a new APK installs over the old one without uninstalling.
+The release APK is optimised (R8), which makes animations noticeably smoother than a debug build. All builds are signed with the same key (`app/debug.keystore`), so a new APK installs over the old one without uninstalling.
 
 ### Building locally (optional)
 
 Needs JDK 17 and the Android SDK (Android Studio installs both).
 
 ```sh
-./gradlew assembleDebug
-# APK: app/build/outputs/apk/debug/app-debug.apk
+./gradlew assembleRelease
+# APK: app/build/outputs/apk/release/app-release.apk
 ```
 
 ## Installing on the TV
@@ -51,7 +53,7 @@ You need `adb` on a computer on the same Wi-Fi as the TV. It comes with Android'
    ```sh
    adb connect TV_IP:5555
    # Accept the "Allow debugging?" prompt on the TV (tick "Always allow").
-   adb install -r tvhome-debug.apk
+   adb install -r tvhome.apk
    ```
 
    On newer Google TV builds with **Wireless debugging**, you may need to pair first: in Wireless debugging choose "Pair device with pairing code", then run `adb pair TV_IP:PAIR_PORT` with the code shown, then `adb connect TV_IP:PORT` using the port shown on that screen.
@@ -82,12 +84,13 @@ Any of these:
 
 - [ ] TV Home appears in the TV's app list with its banner, and is offered when you press Home.
 - [ ] The screen is dark (`#0B0E13`) with the clock top left, weather and the Settings button top right.
-- [ ] Focus starts on the **YouTube** tile.
-- [ ] The focused tile grows slightly and shows a dark inner ring plus an amber outer ring.
-- [ ] D-pad moves naturally: apps row, up to Continue watching, up again to Settings, down to the sports card and inputs, left and right within rows. Nothing gets stuck.
+- [ ] Focus starts on the first app on the shelf.
+- [ ] Shelf tiles show the apps' own banners, and OK opens the app. Back from the app returns to TV Home.
+- [ ] The focused tile springs up slightly and shows a dark inner ring plus an amber outer ring.
+- [ ] D-pad moves naturally: shelf, up to sports, up to Continue watching, up to the round input and Settings buttons (their name shows beneath when focused). Nothing gets stuck.
 - [ ] Settings opens Android settings; Back returns to TV Home.
 - [ ] Back on the home screen does nothing (the app does not close).
-- [ ] Pressing Home while on TV Home puts focus back on the first app tile.
+- [ ] Pressing Home while on TV Home puts focus back on the first app.
 - [ ] Layout fits the screen with no clipped text (try on both 1080p and 4K if you can).
 
 Please also note any spacing or sizing you want changed before step 3.
@@ -102,12 +105,13 @@ app/src/main/
     data/                        models, sample data, LIVE/countdown/date logic
     ui/theme/Theme.kt            colours (accent is one constant), fonts, 1920x1080 scaling
     ui/components/FocusTile.kt   focus scale and double ring
-    ui/home/                     header, rows, sports and inputs cards
-  res/font/                      DejaVu Sans, a free Verdana lookalike (licence in assets/licenses)
+    data/InstalledApps.kt        finds shelf apps on the TV, loads their banners, opens them
+    ui/home/                     header (clock, weather, inputs, Settings), rows, glass shelf
+  res/font/                      Inter (SIL Open Font License, see assets/licenses)
 ```
 
 Layout sizes are written in pixels of a 1920x1080 design and scaled to the screen (`dpx` / `spx` in `Theme.kt`), so the screen looks the same on 1080p and 4K panels.
 
 ## Privacy
 
-No ads, analytics or tracking. No third-party logos are bundled; app tiles use text labels.
+No ads, analytics or tracking. No third-party logos are bundled: shelf tiles use the banners of the apps installed on your TV, or a text label.

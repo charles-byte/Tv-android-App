@@ -14,9 +14,10 @@ data class ContinueItem(
 )
 
 data class AppTile(
+    /** Shown when the app has no banner, and matched against installed app names. */
     val label: String,
-    /** Expected package; confirmed on the device in step 3. */
-    val packageName: String,
+    /** Known package names, tried before matching by name. */
+    val packages: List<String> = emptyList(),
 )
 
 data class Weather(
@@ -48,5 +49,5 @@ data class InputSource(
     val port: String?,
     val kind: Kind,
 ) {
-    enum class Kind { Hdmi, Cast }
+    enum class Kind { Console, Decoder, Cast }
 }

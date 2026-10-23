@@ -14,6 +14,7 @@ import com.charles.tvhome.ui.theme.TvHomeTheme
 class MainActivity : ComponentActivity() {
 
     private var homePresses by mutableIntStateOf(0)
+    private var resumes by mutableIntStateOf(0)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,9 +29,14 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             TvHomeTheme {
-                HomeScreen(homePresses = homePresses)
+                HomeScreen(homePresses = homePresses, resumes = resumes)
             }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        resumes++
     }
 
     override fun onNewIntent(intent: Intent) {

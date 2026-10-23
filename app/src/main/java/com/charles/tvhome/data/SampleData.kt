@@ -12,26 +12,26 @@ import java.time.temporal.ChronoUnit
 object SampleData {
 
     val continueWatching = listOf(
-        ContinueItem("Sample show S2:E4", "Netflix", 0.62f, listOf(Color(0xFF3B2A4A), Color(0xFF1B2433))),
-        ContinueItem("Sample film", "Showmax", 0.28f, listOf(Color(0xFF233A3A), Color(0xFF141C24))),
-        ContinueItem("Sample video", "YouTube", 0.85f, listOf(Color(0xFF4A2F24), Color(0xFF1A1E26))),
-        ContinueItem("Sample match replay", "DStv", 0.45f, listOf(Color(0xFF26364F), Color(0xFF151A22))),
+        ContinueItem("Sample show", "Netflix · S2 E4", 0.62f, listOf(Color(0xFF4B3A6B), Color(0xFF1A1630))),
+        ContinueItem("Sample film", "Showmax", 0.28f, listOf(Color(0xFF2E5A5A), Color(0xFF0F2026))),
+        ContinueItem("Sample video", "YouTube", 0.85f, listOf(Color(0xFF7A4A32), Color(0xFF2A1612))),
+        ContinueItem("Sample match replay", "DStv", 0.45f, listOf(Color(0xFF2F4A78), Color(0xFF111A2E))),
     )
 
     val apps = listOf(
-        AppTile("YouTube", "com.google.android.youtube.tv"),
-        AppTile("Netflix", "com.netflix.ninja"),
-        AppTile("DStv", "com.dstvmobile.android"),
-        AppTile("TOD", "com.tod.tv"),
-        AppTile("Showmax", "com.showmax.app"),
-        AppTile("Spotify", "com.spotify.tv.android"),
+        AppTile("YouTube", listOf("com.google.android.youtube.tv")),
+        AppTile("Netflix", listOf("com.netflix.ninja")),
+        AppTile("DStv"),
+        AppTile("TOD"),
+        AppTile("Showmax"),
+        AppTile("Spotify", listOf("com.spotify.tv.android")),
     )
 
     val weather = Weather(temperatureC = 24, location = "Juja", conditions = "Partly cloudy")
 
     val inputs = listOf(
-        InputSource("PlayStation", "HDMI 1", InputSource.Kind.Hdmi),
-        InputSource("Decoder", "HDMI 2", InputSource.Kind.Hdmi),
+        InputSource("PlayStation", "HDMI 1", InputSource.Kind.Console),
+        InputSource("Decoder", "HDMI 2", InputSource.Kind.Decoder),
         InputSource("Cast", null, InputSource.Kind.Cast),
     )
 
