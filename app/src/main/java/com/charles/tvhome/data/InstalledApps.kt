@@ -47,12 +47,16 @@ object InstalledApps {
             } else {
                 val pkg = match.activityInfo.packageName
                 Log.i(TAG, "${tile.label}: $pkg")
+                // Another app's resources can be broken; never let that take down the home screen.
+                val banner = runCatching { match.activityInfo.loadBanner(pm) ?: pm.getApplicationBanner(pkg) }
+                    .onFailure { Log.w(TAG, "${tile.label}: no banner", it) }
+                    .getOrNull()
+                val icon = runCatching { match.activityInfo.loadIcon(pm) }.getOrNull()
                 ResolvedApp(
                     tile = tile,
                     packageName = pkg,
-                    banner = (match.activityInfo.loadBanner(pm) ?: runCatching { pm.getApplicationBanner(pkg) }.getOrNull())
-                        ?.toImage(640, 360),
-                    icon = match.activityInfo.loadIcon(pm)?.toImage(192, 192),
+                    banner = banner?.toImage(640, 360),
+                    icon = icon?.toImage(192, 192),
                 )
             }
         }

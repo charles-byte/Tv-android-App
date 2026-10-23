@@ -1,5 +1,6 @@
 package com.charles.tvhome.ui.home
 
+import android.util.Log
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -51,7 +52,13 @@ fun HomeScreen(homePresses: Int, resumes: Int) {
         initialValue = AppsState(SampleData.apps.map { ResolvedApp(it, null, null, null) }, loaded = false),
         resumes,
     ) {
-        value = AppsState(withContext(Dispatchers.IO) { InstalledApps.resolve(context, SampleData.apps) }, loaded = true)
+        val resolved = withContext(Dispatchers.IO) {
+            runCatching { InstalledApps.resolve(context, SampleData.apps) }
+                .onFailure { Log.e("TvHome", "App lookup failed", it) }
+                .getOrNull()
+        }
+        // On failure keep the plain labelled tiles rather than crash.
+        if (resolved != null) value = AppsState(resolved, loaded = true)
     }
 
     LaunchedEffect(homePresses) {
