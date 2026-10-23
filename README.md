@@ -103,7 +103,7 @@ app/src/main/
     ui/theme/Theme.kt            colours (accent is one constant), fonts, 1920x1080 scaling
     ui/components/FocusTile.kt   focus scale and double ring
     ui/home/                     header, rows, sports and inputs cards
-  res/font/                      Sora and Inter (SIL Open Font License, see assets/licenses)
+  res/font/                      DejaVu Sans, a free Verdana lookalike (licence in assets/licenses)
 ```
 
 Layout sizes are written in pixels of a 1920x1080 design and scaled to the screen (`dpx` / `spx` in `Theme.kt`), so the screen looks the same on 1080p and 4K panels.

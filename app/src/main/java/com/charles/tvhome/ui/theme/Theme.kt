@@ -31,16 +31,15 @@ object TvColors {
     val Accent = Color(0xFFF2A93B)
 }
 
-val Sora = FontFamily(
-    Font(R.font.sora_regular, FontWeight.Normal),
-    Font(R.font.sora_semibold, FontWeight.SemiBold),
-    Font(R.font.sora_bold, FontWeight.Bold),
-)
-
-val Inter = FontFamily(
-    Font(R.font.inter_regular, FontWeight.Normal),
-    Font(R.font.inter_medium, FontWeight.Medium),
-    Font(R.font.inter_semibold, FontWeight.SemiBold),
+/**
+ * DejaVu Sans, a free Verdana lookalike (Verdana itself cannot be bundled).
+ * It ships only Regular and Bold, so Medium uses Regular and SemiBold uses Bold.
+ */
+val AppFont = FontFamily(
+    Font(R.font.dejavu_sans, FontWeight.Normal),
+    Font(R.font.dejavu_sans, FontWeight.Medium),
+    Font(R.font.dejavu_sans_bold, FontWeight.SemiBold),
+    Font(R.font.dejavu_sans_bold, FontWeight.Bold),
 )
 
 /**
@@ -65,39 +64,39 @@ val Number.spx: TextUnit
 object TvType {
     val clock: TextStyle
         @Composable @ReadOnlyComposable
-        get() = TextStyle(fontFamily = Sora, fontWeight = FontWeight.SemiBold, fontSize = 104.spx, lineHeight = 112.spx)
+        get() = TextStyle(fontFamily = AppFont, fontWeight = FontWeight.SemiBold, fontSize = 104.spx, lineHeight = 112.spx)
 
     val date: TextStyle
         @Composable @ReadOnlyComposable
-        get() = TextStyle(fontFamily = Inter, fontWeight = FontWeight.Medium, fontSize = 28.spx, lineHeight = 36.spx)
+        get() = TextStyle(fontFamily = AppFont, fontWeight = FontWeight.Medium, fontSize = 28.spx, lineHeight = 36.spx)
 
     val temperature: TextStyle
         @Composable @ReadOnlyComposable
-        get() = TextStyle(fontFamily = Sora, fontWeight = FontWeight.SemiBold, fontSize = 48.spx, lineHeight = 54.spx)
+        get() = TextStyle(fontFamily = AppFont, fontWeight = FontWeight.SemiBold, fontSize = 48.spx, lineHeight = 54.spx)
 
     val section: TextStyle
         @Composable @ReadOnlyComposable
-        get() = TextStyle(fontFamily = Inter, fontWeight = FontWeight.SemiBold, fontSize = 20.spx, lineHeight = 24.spx, letterSpacing = 1.5.spx)
+        get() = TextStyle(fontFamily = AppFont, fontWeight = FontWeight.SemiBold, fontSize = 20.spx, lineHeight = 24.spx, letterSpacing = 1.5.spx)
 
     val tileLabel: TextStyle
         @Composable @ReadOnlyComposable
-        get() = TextStyle(fontFamily = Sora, fontWeight = FontWeight.SemiBold, fontSize = 28.spx, lineHeight = 34.spx)
+        get() = TextStyle(fontFamily = AppFont, fontWeight = FontWeight.SemiBold, fontSize = 28.spx, lineHeight = 34.spx)
 
     val cardTitle: TextStyle
         @Composable @ReadOnlyComposable
-        get() = TextStyle(fontFamily = Sora, fontWeight = FontWeight.SemiBold, fontSize = 24.spx, lineHeight = 30.spx)
+        get() = TextStyle(fontFamily = AppFont, fontWeight = FontWeight.SemiBold, fontSize = 24.spx, lineHeight = 30.spx)
 
     val body: TextStyle
         @Composable @ReadOnlyComposable
-        get() = TextStyle(fontFamily = Inter, fontWeight = FontWeight.Normal, fontSize = 20.spx, lineHeight = 26.spx)
+        get() = TextStyle(fontFamily = AppFont, fontWeight = FontWeight.Normal, fontSize = 20.spx, lineHeight = 26.spx)
 
     val badge: TextStyle
         @Composable @ReadOnlyComposable
-        get() = TextStyle(fontFamily = Sora, fontWeight = FontWeight.Bold, fontSize = 18.spx, lineHeight = 22.spx)
+        get() = TextStyle(fontFamily = AppFont, fontWeight = FontWeight.Bold, fontSize = 18.spx, lineHeight = 22.spx)
 
     val time: TextStyle
         @Composable @ReadOnlyComposable
-        get() = TextStyle(fontFamily = Sora, fontWeight = FontWeight.SemiBold, fontSize = 24.spx, lineHeight = 30.spx)
+        get() = TextStyle(fontFamily = AppFont, fontWeight = FontWeight.SemiBold, fontSize = 24.spx, lineHeight = 30.spx)
 }
 
 @Composable
