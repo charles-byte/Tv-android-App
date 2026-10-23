@@ -66,7 +66,12 @@ jobs:
       - name: Render screenshots
         run: |
           chmod +x gradlew
-          ./gradlew :app:testDebugUnitTest --stacktrace
+          set -o pipefail
+          ./gradlew :app:testDebugUnitTest 2>&1 | tee build.log || {
+            echo "==== Errors ===="
+            grep -E "^e: |^w: .*incompatible|FAILED|Exception|Caused by" build.log | grep -v "^\s*at " | head -40
+            exit 1
+          }
 
       - uses: actions/upload-artifact@v4
         with:

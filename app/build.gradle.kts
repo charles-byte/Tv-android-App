@@ -82,3 +82,8 @@ dependencies {
     testImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
 }
+
+// Test-only libraries may be built with a newer Kotlin than the app; allow reading them.
+tasks.matching { it.name == "compileDebugUnitTestKotlin" }.configureEach {
+    (this as org.jetbrains.kotlin.gradle.tasks.KotlinCompile).compilerOptions.freeCompilerArgs.add("-Xskip-metadata-version-check")
+}
