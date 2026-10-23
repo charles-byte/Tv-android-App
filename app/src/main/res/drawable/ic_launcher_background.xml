@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Sunset sky: deep indigo to plum to amber. -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+    <gradient
+        android:angle="270"
+        android:centerColor="#7A3B78"
+        android:endColor="#F2A93B"
+        android:startColor="#1B1446"
+        android:type="linear" />
+</shape>
